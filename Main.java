@@ -1,3 +1,5 @@
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Main {
@@ -5,11 +7,19 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        // 1. Ejecutar la traductora/migración en el arranque, solo si procede
+
+        Path rutaBD = Paths.get("gasolinera.db");
+        Conexion conexionSQLite = new Conexion(rutaBD);
+
+        if (!conexionSQLite.primeraConexion()) {
+            System.err.println("No se pudo conectar a la base de datos. Cerrando...");
+            return;
+        }
+
         Traductora traductora = new Traductora();
         traductora.ejecutarMigracionSiEsNecesario();
 
-        // 2. Establecer el almacenamiento por defecto a JSON
+
         Almacenamiento almacenamiento = new AlmacenamientoJSON();
         ClienteDAO clienteDAO = new ClienteDAO(almacenamiento);
         PagosDAO pagosDAO = new PagosDAO(almacenamiento);

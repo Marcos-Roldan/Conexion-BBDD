@@ -16,10 +16,6 @@ public class Conexion {
     }
 
     public boolean primeraConexion() {
-        if (!Files.exists(archivo)) {
-            System.err.println("No existe la base de datos SQLite: " + archivo.toAbsolutePath());
-            return false;
-        }
 
         try {
             // Se añade la carga explícita del driver para evitar el error No suitable driver found
